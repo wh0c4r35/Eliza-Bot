@@ -52,6 +52,52 @@ app.post('/interactions', async function (req, res) {
         },
       });
     }
+    // "challenge" command
+    if (name === 'challenge' && id) {
+      const userId = req.body.member.user.id;
+      // User's object choice
+      const objectName = req.body.data.options[0].value;
+
+      // Create active game using message ID as the game ID
+      activeGames[id] = {
+        id: userId,
+        objectName,
+      };
+
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          // Fetches a random emoji to send from a helper function
+          content: `Rock papers scissors challenge from <@${userId}>`,
+          components: [
+            {
+              type: MessageComponentTypes.ACTION_ROW,
+              components: [
+                {
+                  type: MessageComponentTypes.BUTTON,
+                  // Append the game ID to use later on
+                  custom_id: `accept_button_${req.body.id}`,
+                  label: 'Accept',
+                  style: ButtonStyleTypes.PRIMARY,
+                },
+              ],
+            },
+          ],
+        },
+      });
+    }
+    //nick command
+    if (name === 'nick' && id) {
+      //req.body.member.setNickname("Blah");
+
+      //changes the given user's nickname
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: req.body.data.options[0].value + '\'s nickname changed to ' // + req.body.options[1].value,
+        },
+      });
+    }
   }
 });
 

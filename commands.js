@@ -40,6 +40,27 @@ const CHALLENGE_COMMAND = {
   type: 1,
 };
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND];
+//Nickname command
+const NICKNAME_COMMAND = {
+  name: "nick",
+  description: 'Change the nickname of the given user',
+  options: [
+    {
+      type: 6,
+      name: 'user',
+      description: 'user to change nickname of',
+      required: true,
+    },
+    {
+      name: 'nick',
+      type: 3,
+      description: 'new nickname',
+      required: true,
+    }
+  ],
+  type: 1,
+}
+
+const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND, NICKNAME_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
